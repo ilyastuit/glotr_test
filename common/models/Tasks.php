@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 class Tasks extends \yii\db\ActiveRecord
 {
     public static function tableName()
@@ -14,9 +12,9 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'performer_id', 'author_id', 'status_id'], 'required'],
+            [['name', 'performer_id', 'author_id', 'status_id', 'priority'], 'required'],
             [['content'], 'string'],
-            [['priority', 'performer_id', 'author_id', 'status_id'], 'default', 'value' => null],
+            [['performer_id', 'author_id', 'status_id'], 'default', 'value' => null],
             [['priority', 'performer_id', 'author_id', 'status_id'], 'integer'],
             [['viewed'], 'boolean'],
             [['name'], 'string', 'max' => 100],
@@ -53,5 +51,14 @@ class Tasks extends \yii\db\ActiveRecord
     public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+    public function getStatusBadge(String $name) {
+        if ($name === "Новый")
+            return '<span class="badge badge-danger">'. $name .'</span>';
+        else if ($name === "В процессе")
+            return '<span class="badge badge-info">'. $name .'</span>';
+        else
+            return '<span class="badge badge-success">'. $name .'</span>';
     }
 }
