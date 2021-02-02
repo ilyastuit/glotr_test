@@ -28,7 +28,8 @@ $username = Yii::$app->user->getIdentity()->username ?? "Guest";
             echo \hail812\adminlte3\widgets\Menu::widget([
                 'items' => [
                     ['label' => 'TODO List', 'header' => true],
-                    ['label' => 'List', 'icon' => 'th'],
+                    ['label' => 'Список задач', 'icon' => 'th', 'url' => ['/tasks']],
+                    ['label' => 'Статусы', 'icon' => 'th', 'url' => ['/status']],
                 ],
             ]);
             ?>

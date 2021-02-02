@@ -30,13 +30,13 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Title',
-            'content' => 'Content',
-            'priority' => 'Priority',
-            'performer_id' => 'Performer ID',
-            'author_id' => 'Author ID',
-            'status_id' => 'Status ID',
-            'viewed' => 'Viewed',
+            'name' => 'Название',
+            'content' => 'Описание',
+            'priority' => 'Приоритет',
+            'performer_id' => 'Исполнитель',
+            'author_id' => 'Назначитель',
+            'status_id' => 'Статус',
+            'viewed' => 'Просмотрено',
         ];
     }
 
