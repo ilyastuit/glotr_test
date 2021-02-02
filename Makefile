@@ -5,9 +5,11 @@ init: docker-down-clear clear docker-pull docker-build docker-up app-init
 
 docker-up:
 	docker-compose up -d
+	sudo chmod -R 777 ${PWD}
 
 docker-down:
-	docker-compose down --remove-orphans
+	docker-compose down
+	sudo chmod -R 777 ${PWD}
 
 docker-down-clear:
 	docker-compose down -v --remove-orphans
@@ -20,7 +22,7 @@ docker-build:
 
 app-init: composer-install wait-db migrations fixtures ready
 	docker-compose exec web chmod -R 755 /var/www/html
-	sudo chmod -R 777 $PWD
+	sudo chmod -R 777 ${PWD}
 
 clear:
 	docker run --rm -v ${PWD}:/var/www/html --workdir=/var/www/html alpine rm -f .ready

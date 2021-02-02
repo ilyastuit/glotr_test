@@ -14,6 +14,7 @@ return [
     'homeUrl' => '/',
     'components' => [
         'request' => [
+            'baseUrl' => '',
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
@@ -44,10 +45,15 @@ return [
             // Disable r= routes
             'enablePrettyUrl' => true,
             'rules' => array(
+                '' => 'site/index',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
+        ],
+        'assetManager' => [
+            'basePath' => '@webroot/assets',
+            'baseUrl' => '@web/assets'
         ],
     ],
     'params' => $params,
