@@ -41,9 +41,9 @@ use yii\helpers\Html;
         </div>
 
         <?php \yii\bootstrap4\ActiveForm::end(); ?>
-
+        <br>
         <p class="mb-0">
-            <a href="register.html" class="text-center">Register a new membership</a>
+            <a href="<?= Yii::$app->urlManager->createUrl('/signup')?>" class="text-center">Register a new membership</a>
         </p>
     </div>
     <!-- /.login-card-body -->
