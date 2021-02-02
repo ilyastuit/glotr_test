@@ -11,7 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'homeUrl' => '/',
+    'homeUrl' => '/admin',
     'components' => [
         'request' => [
             'baseUrl' => '',
@@ -44,12 +44,12 @@ return [
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
-            'rules' => array(
+            'rules' => [
                 '' => 'site/index',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            ),
+            ],
         ],
         'assetManager' => [
             'basePath' => '@webroot/assets',

@@ -1,6 +1,8 @@
 <?php
 namespace backend\controllers;
 
+use common\models\SignupForm;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -22,7 +24,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'signup'],
                         'allow' => true,
                     ],
                     [
@@ -70,6 +72,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        //var_dump(Yii::$app->db->createCommand("select * from user")->execute());
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -83,6 +86,33 @@ class SiteController extends Controller
             $model->password = '';
 
             return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionSignup()
+    {
+        $this->layout = 'blank';
+
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+
+            $user = new User();
+            $user->email = $model->email;
+            $user->username = $model->username;
+            $user->setPassword($model->password);
+            $user->generateAuthKey();
+
+            if ($user->save() && Yii::$app->user->login($user, 3600 * 24 * 30 )) {
+                return $this->goHome();
+            } else {
+                Yii::$app->session->addFlash("Error", "Server error");
+            }
+        } else {
+            $model->password = '';
+
+            return $this->render('register', [
                 'model' => $model,
             ]);
         }

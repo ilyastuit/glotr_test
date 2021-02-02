@@ -45,12 +45,14 @@ return [
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
-            'rules' => array(
-                '' => 'site/index',
+            'rules' => [
+                '/' => 'site/index',
+                '/signin' => 'site/login',
+                '/signup' => 'site/signup',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            ),
+            ],
         ],
         'assetManager' => [
             'basePath' => '@webroot/assets',
