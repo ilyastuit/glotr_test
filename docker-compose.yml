@@ -27,7 +27,7 @@ services:
         build:
             context: ./.docker/conf/php
             dockerfile: php-cli.docker
-        restart: always
+        tty: true
         volumes:
             - .:/var/www/html
             - ./.docker/conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
