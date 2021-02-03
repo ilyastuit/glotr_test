@@ -1,5 +1,6 @@
 <?php
 
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -22,8 +23,11 @@ use yii\grid\GridView;
         <?= Html::a('Создать задачу', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'summary' => false,
         'columns' => [
             [
@@ -48,6 +52,7 @@ use yii\grid\GridView;
                         ['/status/view', 'id' => $model->getStatus()->one()->id]
                     );
                 },
+                'filter' => $statuses,
                 'format' => 'raw',
             ],
             [
@@ -55,9 +60,17 @@ use yii\grid\GridView;
                 'value' => function ($model) {
                     return $model->getAuthor()->one()->username;
                 },
+                'filter' => $users,
                 'format' => 'raw',
             ],
-            'priority',
+            [
+                'attribute' => 'priority',
+                'value' => function ($model) {
+                    return $model->priority;
+                },
+                'filter' => $priorities,
+                'format' => 'raw',
+            ],
 
             [
                 'class' => 'yii\grid\ActionColumn',

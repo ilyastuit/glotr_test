@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Status;
+use common\models\TasksSearch;
 use common\models\User;
 use Yii;
 use common\models\Tasks;
@@ -10,18 +11,44 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 class TasksController extends Controller
 {
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Tasks::find(),
-        ]);
+        $searchModel = new TasksSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $statuses = ArrayHelper::map(
+            Status::find()->all(),
+            'id',
+            'name'
+        );
+        $users = ArrayHelper::map(
+            User::find()->all(),
+            'id',
+            'username'
+        );
+
+        // Prioritetni bazada otdelno tablica qilib ishlasj kerak, hozircha static
+        $priorities = [
+          1 => 1,
+          2 => 2,
+          3 => 3,
+          4 => 4,
+          5 => 5,
+          6 => 6,
+          7 => 7,
+          8 => 8,
+          9 => 9,
+          10 => 10,
+        ];
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'statuses' => $statuses,
+            'users' => $users,
+            'priorities' => $priorities,
         ]);
     }
 
@@ -45,7 +72,6 @@ class TasksController extends Controller
             'id',
             'name'
         );
-
         if ($model->load(Yii::$app->request->post())) {
             $model->author_id = Yii::$app->user->identity->getId();
             $model->save();
